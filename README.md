@@ -17,6 +17,106 @@ Evidence type separates the source class from the score. "Peer-reviewed primary 
 
 Model-generation caveat: prompting results from 2022 and 2023 may not transfer cleanly to 2025/2026 reasoning-native, tool-native, or long-context models. Treat every score as task- and model-conditional, not as a permanent law.
 
+## Table of Contents
+
+| Title | Evidence score | Usefulness score |
+| --- | --- | --- |
+| [System Prompts](#system-prompts) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Role Personas](#role-personas) | 🔴🔴⚪️⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Expert Personas](#expert-personas) | 🔴🔴⚪️⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Chain-of-Thought Prompting](#chain-of-thought-prompting) | 🟢🟢🟢🟢⚪️ | 🟢🟢🟢🟢⚪️ |
+| [Step-by-Step Reasoning Prompts](#step-by-step-reasoning-prompts) | 🟢🟢🟢🟢⚪️ | 🟢🟢🟢🟢⚪️ |
+| [Plan-Then-Execute](#plan-then-execute) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [ReAct](#react) | 🟢🟢🟢🟢⚪️ | 🟢🟢🟢🟢⚪️ |
+| [Reflection](#reflection) | 🟢🟢🟢⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Self-Critique](#self-critique) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Self-Consistency](#self-consistency) | 🟢🟢🟢🟢🟢 | 🟢🟢🟢🟢⚪️ |
+| [Tree of Thoughts](#tree-of-thoughts) | 🟢🟢🟢🟢⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Graph of Thoughts](#graph-of-thoughts) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Debate](#debate) | 🟢🟢🟢⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Board Rooms](#board-rooms) | 🔴🔴⚪️⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Swarms](#swarms) | 🟠🟠⚪️⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Multi-Agent Collaboration](#multi-agent-collaboration) | 🟢🟢🟢⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Agent Supervisors](#agent-supervisors) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Specialist Subagents](#specialist-subagents) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Human Feedback for Training / Preference Learning](#human-feedback-for-training-preference-learning) | 🟢🟢🟢🟢🟢 | 🟢🟢🟢🟢⚪️ |
+| [Human Approval / Human-in-the-Loop Workflow Gating](#human-approval-human-in-the-loop-workflow-gating) | 🟢🟢🟢⚪️⚪️ | 🟢🟢🟢🟢🟢 |
+| [Tool Use](#tool-use) | 🟢🟢🟢🟢⚪️ | 🟢🟢🟢🟢🟢 |
+| [Function Calling](#function-calling) | 🟠🟠🟠⚪️⚪️ | 🟢🟢🟢🟢🟢 |
+| [Retrieval-Augmented Generation](#retrieval-augmented-generation) | 🟢🟢🟢🟢⚪️ | 🟢🟢🟢🟢🟢 |
+| [Long-Context Prompting](#long-context-prompting) | 🟢🟢🟢⚪️⚪️ | 🟢🟢🟢🟢⚪️ |
+| [Context Compression](#context-compression) | 🟢🟢🟢🟢⚪️ | 🟢🟢🟢🟢🟢 |
+| [Memory](#memory) | 🟠🟠🟠⚪️⚪️ | 🟢🟢🟢🟢⚪️ |
+| [Scratchpads](#scratchpads) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Token Limiters](#token-limiters) | 🟢🟢🟢⚪️⚪️ | 🟢🟢🟢🟢🟢 |
+| [RTK](#rtk) | 🟠🟠🟠⚪️⚪️ | 🟢🟢🟢🟢🟢 |
+| [Caveman Prompting](#caveman-prompting) | 🔴🔴⚪️⚪️⚪️ | 🟠🟠⚪️⚪️⚪️ |
+| [Prompt Templates](#prompt-templates) | 🟠🟠🟠⚪️⚪️ | 🟢🟢🟢🟢⚪️ |
+| [Prompt Delimiters / XML Tags](#prompt-delimiters-xml-tags) | 🟠🟠⚪️⚪️⚪️ | 🟢🟢🟢⚪️⚪️ |
+| [Few-Shot Prompting](#few-shot-prompting) | 🟢🟢🟢🟢⚪️ | 🟢🟢🟢🟢🟢 |
+| [Zero-Shot Prompting](#zero-shot-prompting) | 🟢🟢🟢🟢⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Examples and Counterexamples](#examples-and-counterexamples) | 🟢🟢🟢🟢⚪️ | 🟢🟢🟢🟢⚪️ |
+| [Rubrics](#rubrics) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Checklists](#checklists) | 🟠🟠⚪️⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Guardrails](#guardrails) | 🟢🟢🟢⚪️⚪️ | 🟢🟢🟢🟢⚪️ |
+| [Constitutional AI](#constitutional-ai) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Output Schemas](#output-schemas) | 🟠🟠🟠⚪️⚪️ | 🟢🟢🟢🟢🟢 |
+| [Structured Outputs](#structured-outputs) | 🟠🟠🟠⚪️⚪️ | 🟢🟢🟢🟢🟢 |
+| [JSON Mode](#json-mode) | 🟠🟠🟠⚪️⚪️ | 🟢🟢🟢🟢🟢 |
+| [Prompt Chaining](#prompt-chaining) | 🟠🟠🟠⚪️⚪️ | 🟢🟢🟢🟢⚪️ |
+| [Workflow Orchestration](#workflow-orchestration) | 🟠🟠🟠⚪️⚪️ | 🟢🟢🟢🟢⚪️ |
+| [Iterative Refinement](#iterative-refinement) | 🟠🟠🟠⚪️⚪️ | 🟢🟢🟢🟢⚪️ |
+| [Test-Time Compute](#test-time-compute) | 🟢🟢🟢🟢⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Monte Carlo Sampling](#monte-carlo-sampling) | 🟢🟢🟢🟢⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Majority Voting](#majority-voting) | 🟢🟢🟢🟢⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Critic Models](#critic-models) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Judge Models](#judge-models) | 🟢🟢🟢⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Eval-Driven Development](#eval-driven-development) | 🟢🟢🟢🟢⚪️ | 🟢🟢🟢🟢🟢 |
+| [Test Harnesses](#test-harnesses) | 🟢🟢🟢🟢⚪️ | 🟢🟢🟢🟢🟢 |
+| [Benchmarks](#benchmarks) | 🟢🟢🟢🟢⚪️ | 🟢🟢🟢🟢🟢 |
+| [Synthetic Data Generation](#synthetic-data-generation) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Fine-Tuning](#fine-tuning) | 🟢🟢🟢🟢🟢 | 🟠🟠🟠⚪️⚪️ |
+| [LoRA](#lora) | 🟢🟢🟢🟢🟢 | 🟠🟠🟠⚪️⚪️ |
+| [Distillation](#distillation) | 🟢🟢🟢🟢⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Model Routing](#model-routing) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Model Cascades](#model-cascades) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Mixture of Experts](#mixture-of-experts) | 🟢🟢🟢🟢🟢 | 🟠🟠🟠⚪️⚪️ |
+| [Embeddings](#embeddings) | 🟢🟢🟢🟢⚪️ | 🟢🟢🟢🟢🟢 |
+| [Semantic Search](#semantic-search) | 🟢🟢🟢🟢⚪️ | 🟢🟢🟢🟢🟢 |
+| [Reranking](#reranking) | 🟢🟢🟢🟢⚪️ | 🟢🟢🟢🟢🟢 |
+| [Knowledge Graphs](#knowledge-graphs) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Vector Databases](#vector-databases) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Caching](#caching) | 🟠🟠⚪️⚪️⚪️ | 🟠🟠⚪️⚪️⚪️ |
+| [Prompt Caching](#prompt-caching) | 🟠🟠⚪️⚪️⚪️ | 🟠🟠⚪️⚪️⚪️ |
+| [Batch Inference](#batch-inference) | 🟠🟠⚪️⚪️⚪️ | 🟠🟠⚪️⚪️⚪️ |
+| [Streaming](#streaming) | 🟠🟠⚪️⚪️⚪️ | 🟠🟠⚪️⚪️⚪️ |
+| [Code Interpreter](#code-interpreter) | 🟢🟢🟢🟢⚪️ | 🟢🟢🟢🟢🟢 |
+| [Sandboxed Execution](#sandboxed-execution) | 🟢🟢🟢🟢⚪️ | 🟢🟢🟢🟢⚪️ |
+| [Browser Agents](#browser-agents) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Computer Use](#computer-use) | 🟢🟢🟢⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Autonomous Agents](#autonomous-agents) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Planning Agents](#planning-agents) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Coding Agents](#coding-agents) | 🟢🟢🟢🟢⚪️ | 🟢🟢🟢🟢⚪️ |
+| [Voice Agents](#voice-agents) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Multimodal Prompting](#multimodal-prompting) | 🟢🟢🟢🟢⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Vision-Language Models](#vision-language-models) | 🟢🟢🟢🟢🟢 | 🟠🟠🟠⚪️⚪️ |
+| [Image Generation](#image-generation) | 🟢🟢🟢🟢🟢 | 🟠🟠🟠⚪️⚪️ |
+| [Reinforcement Learning from Human Feedback](#reinforcement-learning-from-human-feedback) | 🟢🟢🟢🟢🟢 | 🟠🟠🟠⚪️⚪️ |
+| [Direct Preference Optimization](#direct-preference-optimization) | 🟢🟢🟢🟢🟢 | 🟠🟠🟠⚪️⚪️ |
+| [Active Learning](#active-learning) | 🟢🟢🟢🟢⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Uncertainty Estimation](#uncertainty-estimation) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Fallbacks](#fallbacks) | 🟠🟠⚪️⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Error Recovery](#error-recovery) | 🟢🟢🟢⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Observability](#observability) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Tracing](#tracing) | 🟠🟠⚪️⚪️⚪️ | 🟠🟠⚪️⚪️⚪️ |
+| [Cost Controls](#cost-controls) | 🟢🟢🟢⚪️⚪️ | 🟢🟢🟢🟢⚪️ |
+| [Rate Limiting](#rate-limiting) | 🟠🟠⚪️⚪️⚪️ | 🟠🟠⚪️⚪️⚪️ |
+| [Prompt Injection Defense](#prompt-injection-defense) | 🟢🟢🟢⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Jailbreak Resistance](#jailbreak-resistance) | 🟠🟠🟠⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Data Redaction](#data-redaction) | 🟢🟢🟢⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Privacy Filters](#privacy-filters) | 🟢🟢🟢⚪️⚪️ | 🟠🟠🟠⚪️⚪️ |
+| [Content Moderation](#content-moderation) | 🟢🟢🟢🟢⚪️ | 🟠🟠🟠⚪️⚪️ |
+
 ## System Prompts
 
 Evidence: 🟠🟠🟠⚪️⚪️
